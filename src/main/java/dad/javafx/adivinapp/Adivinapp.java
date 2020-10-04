@@ -17,7 +17,7 @@ public class Adivinapp extends Application {
 	private Label requestLabel;
 	private TextField numField;
 	private Button comprobarButton;
-	private int numAleatorio = (int) Math.random() * 100 + 1;
+	private int numAleatorio = (int) (Math.random() * (100 -1)) + 1;
 	int nIntentos = 0;
 	Alert acierto = new Alert(AlertType.INFORMATION);
 	Alert error = new Alert(AlertType.ERROR);
@@ -69,27 +69,35 @@ public class Adivinapp extends Application {
 		acierto.setTitle("¡Agüita chaval");
 		acierto.setHeaderText("Esa es");
 		
+		
+		
 		try {
 			int num = Integer.parseInt(numField.getText());
 			
 			if (num == numAleatorio) {
+				nIntentos++;
 				acierto.setContentText(
 						"Sólo has necesitado " + nIntentos + " intento/os" + "\n" + "Vuelve a jugar y hazlo mejor");
 				acierto.showAndWait();
-				nIntentos++;
+				nIntentos = 0;
+				numAleatorio = (int) (Math.random() * (100 -1)) + 1;
+				numField.setText("");
 
 			} else if (num < 1 || num > 100) {
 				error.setContentText("El número introducido no es válido.");
 				error.showAndWait();
 				nIntentos++;
+				numField.setText("");
 			} else if (numAleatorio < num) {
 				nMenor.setContentText("El número es menor que " + num + "\n" + "Vuelve a intentarlo");
 				nMenor.showAndWait();
 				nIntentos++;
+				numField.setText("");
 			} else {
 				nMayor.setContentText("El número es mayor que " + num + "\n" + "Vuelve a intentarlo");
 				nMayor.showAndWait();
 				nIntentos++;
+				numField.setText("");
 			}
 			
 			
